@@ -79,8 +79,9 @@ app.get('/search', (req, res)=>{
 
     // axios get comment data 
     axios.get(comment, config).then(allComm => {
-
-        res.send(allComm.data)
+        // inject data 
+        const output = filterContain(allComm.data, req.query);
+        res.send(output)
     });
 
 })
