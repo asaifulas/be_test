@@ -40,7 +40,18 @@ app.post('/top-post', (req, res)=>{
     axios.get(comment, config).then(datCom => {
         const noOfComment = getCommentNumber(datCom.data)
         
-        
+        // get posts data 
+        axios.get(post, config).then(datPost =>{
+            // combine both posts n comment data 
+            const combine = datPost.data.map(data => {
+                return {
+                    post_id:data.id,
+                    post_title:data.title,
+                    post_body:data.body,
+                    total_number_of_comments: noOfComment.filter(({id}) => data.id == id)[0].quantity
+                }
+            })
+        })
     })
 
 })
