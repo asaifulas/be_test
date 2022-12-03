@@ -56,6 +56,7 @@ app.post('/top-post', (req, res)=>{
             const sortedTopPost = combine.sort((a,b)=>{
                 return b.quantity - a.quantity
             })
+            res.send(sortedTopPost)
         })
     })
 
