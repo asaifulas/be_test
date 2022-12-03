@@ -51,6 +51,11 @@ app.post('/top-post', (req, res)=>{
                     total_number_of_comments: noOfComment.filter(({id}) => data.id == id)[0].quantity
                 }
             })
+
+            // sort top post 
+            const sortedTopPost = combine.sort((a,b)=>{
+                return b.quantity - a.quantity
+            })
         })
     })
 
