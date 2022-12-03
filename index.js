@@ -26,7 +26,19 @@ const getCommentNumber = dataIn => {
        this[data.postId].quantity += 1;
     }, {});
     return res;
- }
+}
+
+// filter with query contain keyword 
+const filterContain = (array, param) => {
+    return array.filter((item)=> {
+        for (var key in param) {
+            // will turn to false if the key is undefined or not contain keyword 
+            if (item[key] === undefined || !item[key].toString().toLowerCase().includes(param[key].toString().toLowerCase()))
+            return false;
+        }
+    return true;
+    });
+}
 
 // Frontpage
 app.get('/', (req, res)=>{
