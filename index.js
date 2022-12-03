@@ -65,6 +65,12 @@ app.post('/top-post', (req, res)=>{
 // Second task, search query
 app.get('/search', (req, res)=>{
 
+    // axios get comment data 
+    axios.get(comment, config).then(allComm => {
+
+        res.send(allComm.data)
+    });
+
 })
 
 app.listen(3002)
