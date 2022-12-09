@@ -12,20 +12,12 @@ const config = { headers: { Accept: 'application/json', 'Accept-Encoding': 'iden
 // function 
 // get the number of comment for each post 
 const getCommentNumber = dataIn => {
-    const res = [];
-    
+    const res = {};
     dataIn.forEach(data => {
-       if (!this[data.postId]) {
-
-          this[data.postId] = {
-             id: data.postId, quantity: 0
-          };
-          res.push(this[data.postId]);
-
-       };
-       this[data.postId].quantity += 1;
-    }, {});
-    return res;
+        if (!res[data.postId])res[data.postId] = 0;
+        res[data.postId] += 1;
+     }, {});
+     return res;
 }
 
 // filter with query contain keyword 
@@ -52,15 +44,16 @@ app.post('/top-post', (req, res)=>{
     axios.get(comment, config).then(datCom => {
         const noOfComment = getCommentNumber(datCom.data)
         
-        // get posts data 
+        // get posts data
         axios.get(post, config).then(datPost =>{
-            // combine both posts n comment data 
+            // combine both posts n comment data
+            
             const combine = datPost.data.map(data => {
                 return {
                     post_id:data.id,
                     post_title:data.title,
                     post_body:data.body,
-                    total_number_of_comments: noOfComment.filter(({id}) => data.id == id)[0].quantity
+                    total_number_of_comments: noOfComment[data.id]
                 }
             })
 
